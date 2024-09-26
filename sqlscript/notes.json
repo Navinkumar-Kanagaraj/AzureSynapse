@@ -2,7 +2,7 @@
 	"name": "notes",
 	"properties": {
 		"content": {
-			"query": "/*\nWith lake databases in Azure Synapse Analytics, you can combine the benefits of both Data Lake and The Relational Database.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n*/",
+			"query": "/*\nWith lake databases in Azure Synapse Analytics, you can combine the benefits of both Data Lake and The Relational Database.\n\n**********************************************************\nwhile you can use SQL Database with external tables to reference data in a Data Lake, Lake Database provides a more integrated \nand flexible approach for managing and analyzing large-scale data directly within the data lake environment.\n**********************************************************\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n*/",
 			"metadata": {
 				"language": "sql"
 			},
