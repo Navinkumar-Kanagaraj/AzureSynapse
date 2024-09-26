@@ -1,0 +1,17 @@
+{
+	"name": "notes",
+	"properties": {
+		"content": {
+			"query": "/*\nWith lake databases in Azure Synapse Analytics, you can combine the benefits of both Data Lake and The Relational Database.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n*/",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
