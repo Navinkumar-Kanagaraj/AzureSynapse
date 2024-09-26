@@ -1,0 +1,22 @@
+{
+	"name": "ExploreLakeDB",
+	"properties": {
+		"Name": "ExploreLakeDB",
+		"EntityType": "DATABASE",
+		"Origin": {
+			"Type": "SPARK"
+		},
+		"Properties": {
+			"IsSyMSCDMDatabase": true
+		},
+		"Source": {
+			"Provider": "ADLS",
+			"Location": "abfss://files@datalake8heknbv.dfs.core.windows.net/ExploreLakeDB",
+			"Properties": {
+				"FormatType": "csv",
+				"LinkedServiceName": "synapse8heknbv-WorkspaceDefaultStorage"
+			}
+		}
+	},
+	"type": "DATABASE"
+}
