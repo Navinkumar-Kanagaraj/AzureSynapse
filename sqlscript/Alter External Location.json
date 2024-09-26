@@ -2,7 +2,7 @@
 	"name": "Alter External Location",
 	"properties": {
 		"content": {
-			"query": "\n/*\nTo alter the location of an External Data Source in Azure SQL Database or SQL Server, there isn't a direct ALTER \nstatement for it. Instead, you would need to drop the existing external data source and recreate it with the new location.\n*/\n\n\nDROP EXTERNAL DATA SOURCE sales_data;\nGO\n\nCREATE EXTERNAL DATA SOURCE sales_data\nWITH (\n    LOCATION = 'https://datalake8heknbv.dfs.core.windows.net/NewOutputFiles/NewSalesData'\n);\nGO\n",
+			"query": "\n/*\nTo alter the location of an External Data Source in Azure SQL Database or SQL Server, there isn't a direct ALTER \nstatement for it. Instead, you would need to drop the existing external data source and recreate it with the new location.\n*/\n\n\nDROP EXTERNAL DATA SOURCE sales_data;\nGO\n\nCREATE EXTERNAL DATA SOURCE sales_data\nWITH (\n    LOCATION = 'https://datalake8heknbv.dfs.core.windows.net/files/sales/csv'\n);\nGO\n",
 			"metadata": {
 				"language": "sql"
 			},
