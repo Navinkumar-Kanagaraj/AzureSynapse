@@ -1,0 +1,158 @@
+{
+	"name": "FilesExploreInSpark_001",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "SparkExplore",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "10e75916-e19f-478c-a7d2-68d8ac19021f"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/756ae8d4-cae2-4704-b0a3-acf0fd7bb030/resourceGroups/dp203-8heknbv/providers/Microsoft.Synapse/workspaces/synapse8heknbv/bigDataPools/SparkExplore",
+				"name": "SparkExplore",
+				"type": "Spark",
+				"endpoint": "https://synapse8heknbv.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/SparkExplore",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.4",
+				"nodeCount": 10,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": false
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "python"
+					},
+					"collapsed": false
+				},
+				"source": [
+					"%%pyspark\r\n",
+					"df = spark.read.load('abfss://files@datalake8heknbv.dfs.core.windows.net/sales/csv/*.csv', format='csv'\r\n",
+					", header=True\r\n",
+					")\r\n",
+					"display(df.limit(10))"
+				],
+				"execution_count": 5
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"df.printSchema()"
+				],
+				"execution_count": 6
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"from pyspark.sql.types import *\r\n",
+					"from pyspark.sql.functions import *\r\n",
+					"\r\n",
+					"orderSchema = StructType([\r\n",
+					"     StructField(\"SalesOrderNumber\", StringType()),\r\n",
+					"     StructField(\"SalesOrderLineNumber\", IntegerType()),\r\n",
+					"     StructField(\"OrderDate\", DateType()),\r\n",
+					"     StructField(\"CustomerName\", StringType()),\r\n",
+					"     StructField(\"Email\", StringType()),\r\n",
+					"     StructField(\"Item\", StringType()),\r\n",
+					"     StructField(\"Quantity\", IntegerType()),\r\n",
+					"     StructField(\"UnitPrice\", FloatType()),\r\n",
+					"     StructField(\"Tax\", FloatType())\r\n",
+					"     ])\r\n",
+					"\r\n",
+					"df_Explicit_Schema = spark.read.load('abfss://files@datalakexxxxxxx.dfs.core.windows.net/sales/orders/*.csv', format='csv', schema=orderSchema)\r\n",
+					"display(df_Explicit_Schema.limit(100))"
+				],
+				"execution_count": 7
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"df_Explicit_Schema.printSchema()"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"df_Explicit_Schema_Analysis = df_Explicit_Schema.select(\"CustomerName\", \"EmailAddress\")"
+				],
+				"execution_count": null
+			}
+		]
+	}
+}
