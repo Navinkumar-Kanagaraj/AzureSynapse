@@ -1,0 +1,270 @@
+{
+	"name": "DeltalakeExplore",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "SparkExplore",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "8215661c-55f8-43b1-af15-d8a03bb84146"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/756ae8d4-cae2-4704-b0a3-acf0fd7bb030/resourceGroups/dp203-8heknbv/providers/Microsoft.Synapse/workspaces/synapse8heknbv/bigDataPools/SparkExplore",
+				"name": "SparkExplore",
+				"type": "Spark",
+				"endpoint": "https://synapse8heknbv.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/SparkExplore",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.4",
+				"nodeCount": 10,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": false
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "python"
+					}
+				},
+				"source": [
+					"%%pyspark\r\n",
+					"df = spark.read.load('abfss://files@datalake8heknbv.dfs.core.windows.net/files/RetailDB/Product/products.csv', format='csv'\r\n",
+					"## If header exists uncomment line below\r\n",
+					"##, header=True\r\n",
+					")\r\n",
+					"display(df.limit(10))"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"microsoft": {
+						"language": "python"
+					}
+				},
+				"source": [
+					"%%pyspark\r\n",
+					"df = spark.read.load('abfss://files@datalakexxxxxxx.dfs.core.windows.net/products/products.csv', format='csv'\r\n",
+					"## If header exists uncomment line below\r\n",
+					", header=True\r\n",
+					")\r\n",
+					"display(df.limit(10))"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					" delta_table_path = \"/delta/products-delta\"\r\n",
+					" df.write.format(\"delta\").save(delta_table_path)"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					" from delta.tables import *\r\n",
+					" from pyspark.sql.functions import *\r\n",
+					"\r\n",
+					" # Create a deltaTable object\r\n",
+					" deltaTable = DeltaTable.forPath(spark, delta_table_path)\r\n",
+					"\r\n",
+					" # Update the table (reduce price of product 771 by 10%)\r\n",
+					" deltaTable.update(\r\n",
+					"     condition = \"ProductID == 771\",\r\n",
+					"     set = { \"ListPrice\": \"ListPrice * 0.9\" })\r\n",
+					"\r\n",
+					" # View the updated data as a dataframe\r\n",
+					" deltaTable.toDF().show(10)"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					" new_df = spark.read.format(\"delta\").load(delta_table_path)\r\n",
+					" new_df.show(10)"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					" new_df = spark.read.format(\"delta\").option(\"versionAsOf\", 0).load(delta_table_path)\r\n",
+					" new_df.show(10)"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					" deltaTable.history(10).show(20, False, True)"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"The command deltaTable.history(10).show(20, False, True) in PySpark/Databricks is used to display the transaction history of a Delta table. This history provides details of the past operations performed on the table, such as inserts, updates, deletes, merges, and schema changes.\r\n",
+					"\r\n",
+					"Here's a breakdown of each part:\r\n",
+					"\r\n",
+					"1. deltaTable.history(10)\r\n",
+					"deltaTable.history() is a function that retrieves the transaction history of the Delta table.\r\n",
+					"\r\n",
+					"10: The number in parentheses specifies how many versions or transactions to retrieve. So, history(10) will fetch details of the last 10 operations that were performed on the Delta table.\r\n",
+					"\r\n",
+					"This will include operations like:\r\n",
+					"\r\n",
+					"Data modifications (e.g., INSERT, UPDATE, DELETE)\r\n",
+					"Table schema changes\r\n",
+					"Metadata updates\r\n",
+					"2. .show(20, False, True)\r\n",
+					"This part formats how the retrieved history will be displayed in the output.\r\n",
+					".show(n, truncate, vertical)\r\n",
+					"n (20): The first parameter (20) specifies the number of rows to display in the output. In this case, it will display 20 rows of the transaction history.\r\n",
+					"\r\n",
+					"Since deltaTable.history(10) only fetches the last 10 transactions, this argument will just display all 10, and the rest will be empty.\r\n",
+					"\r\n",
+					"truncate (False): This parameter determines whether to truncate the output columns if the content is too wide.\r\n",
+					"\r\n",
+					"False: Do not truncate the content, so the full data for each column is displayed, regardless of length.\r\n",
+					"True: Truncates long columns to fit the output width.\r\n",
+					"In this case, since False is specified, the output will not be truncated, and all the content will be fully displayed.\r\n",
+					"\r\n",
+					"vertical (True): If set to True, the output is displayed in vertical format, where each column is printed on a new line (useful when the content is long and hard to read in a table format).\r\n",
+					"\r\n",
+					"If True, the output will be printed in vertical mode.\r\n",
+					"If False, the output will be printed in a more traditional tabular format.\r\n",
+					"Since True is used here, each row’s data will be printed in vertical format, which makes it easier to view detailed information for each transaction.\r\n",
+					"\r\n",
+					"What Does This Command Do?\r\n",
+					"The command will:\r\n",
+					"Fetch the last 10 transactions (e.g., INSERT, UPDATE, MERGE, DELETE) performed on the deltaTable.\r\n",
+					"Display up to 20 rows of the transaction history.\r\n",
+					"Not truncate any columns, so all details will be fully visible.\r\n",
+					"Format the output in vertical mode to make it easier to read detailed information about each transaction."
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					""
+				],
+				"execution_count": null
+			}
+		]
+	}
+}
