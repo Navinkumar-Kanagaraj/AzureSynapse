@@ -2,12 +2,12 @@
 	"name": "DeltaTableFromServerlessSQL",
 	"properties": {
 		"content": {
-			"query": "-- This is auto-generated code\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://datalakesmgxwkq.dfs.core.windows.net/files/delta/products-delta/',\n        FORMAT = 'DELTA'\n    ) AS [result]\n",
+			"query": "-- This is auto-generated code\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://datalakesmgxwkq.dfs.core.windows.net/files/delta/products-delta/',\n        FORMAT = 'DELTA'\n    ) AS [result]\n\n\n\n-- Serverless SQL Pool can be used to query delta lake data in catalog tables\n-- that are defined in the Spark Metastore\n\n",
 			"metadata": {
 				"language": "sql"
 			},
 			"currentConnection": {
-				"databaseName": "master",
+				"databaseName": "adventureworks",
 				"poolName": "Built-in"
 			},
 			"resultLimit": 5000
