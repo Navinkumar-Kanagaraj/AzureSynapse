@@ -1,0 +1,52 @@
+{
+	"name": "LoadProductsData",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Products_Csv",
+						"type": "DatasetReference"
+					},
+					"name": "ProductsFile",
+					"description": "Products File Data"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Products_Csv",
+						"type": "DatasetReference"
+					},
+					"name": "ProductDataSink"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          ProductID as string,",
+				"          ProductName as string,",
+				"          Category as string,",
+				"          ListPrice as decimal(10,0)",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ProductsFile",
+				"ProductsFile sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ProductID as string,",
+				"          ProductName as string,",
+				"          Category as string,",
+				"          ListPrice as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> ProductDataSink"
+			]
+		}
+	}
+}
