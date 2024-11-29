@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"value": "pocsynapseworkspacesa"
+		},
+		"pocsynapseworkspacesa-WorkspaceDefaultSqlServer_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:pocsynapseworkspacesa.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
+		},
+		"synapse8heknbv-WorkspaceDefaultSqlServer_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:synapse8heknbv.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
+		},
+		"synapsesmgxwkq-WorkspaceDefaultSqlServer_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:synapsesmgxwkq.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
+		},
+		"pocsynapseworkspacesa-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://databrickspocsadab.dfs.core.windows.net"
+		},
+		"synapse8heknbv-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://datalake8heknbv.dfs.core.windows.net"
+		},
+		"synapsesmgxwkq-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://datalakesmgxwkq.dfs.core.windows.net"
+		}
+	}
+}
