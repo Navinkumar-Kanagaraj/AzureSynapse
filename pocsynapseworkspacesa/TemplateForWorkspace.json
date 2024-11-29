@@ -521,6 +521,26 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/RSSFeedData_Explore')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "/*\nCREATE TABLE RSSFeedData (\n    Title VARCHAR(500),\n    Description VARCHAR(1000),\n    PublishDate DATETIME,\n    URL VARCHAR(1000),\n    EventProcessedTime DATETIME,\n    EventEnqueuedTime DATETIME\n);\n*/\n\nSELECT * FROM RSSFeedData\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "Datawarehouse_poc",
+						"poolName": "Datawarehouse_poc"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/Select External records')]",
 			"type": "Microsoft.Synapse/workspaces/sqlscripts",
 			"apiVersion": "2019-06-01-preview",
