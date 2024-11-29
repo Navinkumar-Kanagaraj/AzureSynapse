@@ -1,0 +1,17 @@
+{
+	"name": "Quering_StreamTable",
+	"properties": {
+		"content": {
+			"query": "SELECT COUNT(1) FROM StreamAnalyticsPOC\n\nSELECT * FROM StreamAnalyticsPOC\nORDER BY Customer_ID \n\n--- Updated POC\n\nSELECT * FROM StreamSales",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "Datawarehouse_poc",
+				"poolName": "Datawarehouse_poc"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

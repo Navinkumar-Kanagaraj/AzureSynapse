@@ -1,0 +1,17 @@
+{
+	"name": "PostLoadPerformanceOptimization",
+	"properties": {
+		"content": {
+			"query": "\n-- Statistics Creation\n-- Synapse does not automatically update statistics after data loads. Create or update statistics to help the query optimizer.\n-- For large tables with clustered columnstore indexes, this ensures better query plans.\n\n-- When to Create Statistics: Columns used in Joins, Where, Aggregations\n\n-- Best practices:\n-- Automated Updates: In Synapse SQL pools, statistics are not automatically updated after data loads, so you must explicitly update them, especially after large inserts.\n-- Partitioned Tables: If your fact tables are partitioned (e.g., by date), consider creating statistics on each partition for better query optimization.\n\nCREATE STATISTICS Stat_DateKey\nON FactSales (DateKey);\n\nCREATE STATISTICS Stat_ProductKey\nON FactSales (ProductKey);\n\nCREATE STATISTICS Stat_CustomerKey\nON FactSales (CustomerKey);\n\n-- Rebuild Indexes\n-- If data is inserted into Heap Tables or Clustered Index Tables, rebuilding the indexes can optimize data retrieval.\n\n-- Columnstore Indexes are often the best option for large fact tables in Synapse as they provide both compression and efficient query performance.\n\n-- After loading large amounts of data, consider using the REBUILD or DROP and RECREATE methods to optimize the storage and query performance.\n\nALTER INDEX ALL ON FactSales REBUILD;\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "Datawarehouse_poc",
+				"poolName": "Datawarehouse_poc"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

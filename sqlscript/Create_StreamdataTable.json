@@ -1,0 +1,17 @@
+{
+	"name": "Create_StreamdataTable",
+	"properties": {
+		"content": {
+			"query": "-- Column names should align with the Stream Query\n\nCREATE TABLE StreamAnalyticsPOC\n(\n    Customer_ID INT,\n    Full_Name VARCHAR(100),\n    Email_Address VARCHAR(255),\n    EventProcessedUtcTime DATETIME\n)\n\n\nCREATE TABLE StreamSales (\n    StoreName NVARCHAR(100) NOT NULL,\n    StoreLocation NVARCHAR(255) NULL,\n    ProductName NVARCHAR(255) NOT NULL,\n    ProductCategory NVARCHAR(100) NULL,\n    Manufacturer NVARCHAR(255) NULL,\n    CustomerName NVARCHAR(255) NULL,\n    CustomerLoyaltyPoints INT NULL,\n    CustomerLocation NVARCHAR(255) NULL,\n    RegistrationDate DATE NOT NULL,\n    SaleDate DATE NOT NULL,\n    Quantity INT NOT NULL,\n    UnitPrice DECIMAL(18, 2) NOT NULL,\n    TotalPrice DECIMAL(18, 2) NOT NULL,\n    PaymentMethod NVARCHAR(50) NULL,\n    EventProcessedUtcTime DATETIME NOT NULL\n);\n\n\n\n\n\n\n\n\n\n\n\n/* \n\n-- Explored on Stream using some sample data\n\n\nCREATE TABLE StreamSalesData (\n    SaleID BIGINT NOT NULL,\n    StoreName NVARCHAR(255) NOT NULL,\n    ProductName NVARCHAR(255) NOT NULL,\n    CustomerName NVARCHAR(255) NOT NULL,\n    SaleDate DATETIME NOT NULL,\n    Quantity BIGINT NOT NULL,\n    TotalPrice FLOAT NOT NULL,\n    PaymentMethod NVARCHAR(50) NOT NULL\n)\nWITH\n(\n    DISTRIBUTION = HASH(SaleID)  -- Distributes rows across nodes based on SaleID\n);\n\n\n-------------------------------\n\n\n\n\nCREATE TABLE StreamSalesData (\n    SaleID NVARCHAR(255) NOT NULL,\n    StoreName NVARCHAR(255) NOT NULL,\n    ProductName NVARCHAR(255) NOT NULL,\n    CustomerName NVARCHAR(255) NOT NULL,\n    SaleDate DATETIME NOT NULL,\n    Quantity NVARCHAR(255) NOT NULL,\n    TotalPrice NVARCHAR(255) NOT NULL,\n    PaymentMethod NVARCHAR(50) NOT NULL\n)\nWITH\n(\n    DISTRIBUTION = HASH(SaleID)  -- Distributes rows across nodes based on SaleID\n);\n\n\nDROP TABLE StreamSalesData;\n\n\n\n\n\nCREATE TABLE StreamSalesDataDirect\n(\n    SaleID INT, \n    StoreID INT,\n    StoreName VARCHAR(100),\n    ProductID INT, \n    CustomerID INT, \n    SaleDate DATETIME, \n    Quantity INT, \n    UnitPrice DECIMAL(10,2), \n    TotalPrice  DECIMAL(10,2), \n    PaymentMethod VARCHAR(100), \n    EventProcessedUtcTime DATETIME\n)\nWITH\n(\n    DISTRIBUTION = HASH(SaleID)  -- Distributes rows across nodes based on SaleID\n);\n\n\nDROP TABLE StreamSalesDataDirect;\n\n*/\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "Datawarehouse_poc",
+				"poolName": "Datawarehouse_poc"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
