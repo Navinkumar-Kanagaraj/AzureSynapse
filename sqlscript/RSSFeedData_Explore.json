@@ -1,0 +1,17 @@
+{
+	"name": "RSSFeedData_Explore",
+	"properties": {
+		"content": {
+			"query": "/*\nCREATE TABLE RSSFeedData (\n    Title VARCHAR(500),\n    Description VARCHAR(1000),\n    PublishDate DATETIME,\n    URL VARCHAR(1000),\n    EventProcessedTime DATETIME,\n    EventEnqueuedTime DATETIME\n);\n*/\n\nSELECT * FROM RSSFeedData\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "Datawarehouse_poc",
+				"poolName": "Datawarehouse_poc"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
