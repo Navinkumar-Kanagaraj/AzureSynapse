@@ -2,7 +2,7 @@
 	"name": "RSSFeedData_Explore",
 	"properties": {
 		"content": {
-			"query": "/*\nCREATE TABLE RSSFeedData (\n    Title VARCHAR(500),\n    Description VARCHAR(1000),\n    PublishDate DATETIME,\n    URL VARCHAR(1000),\n    EventProcessedTime DATETIME,\n    EventEnqueuedTime DATETIME\n);\n*/\n\nSELECT * FROM RSSFeedData\n",
+			"query": "/*\nCREATE TABLE RSSFeedData_AF (\n    Title VARCHAR(500),\n    Description VARCHAR(1000),\n    PublishDate VARCHAR(500),\n    URL VARCHAR(1000),\n    EventProcessedTime DATETIME,\n    EventEnqueuedTime DATETIME\n);\n*/\n\nSELECT * FROM RSSFeedData_AF\n\nSELECT COUNT(1) FROM RSSFeedData_AF --48\n\nSELECT * FROM RSSFeedData_AF WHERE PublishDate LIKE 'Mon%'\n/*\nEvent Processed Time\n2024-12-02T05:10:54\nEvent Enqueued Time\n2024-12-02T05:01:11\nPublish Date Max\nMon, 02 Dec 2024 04:39:11 GMT\n*/",
 			"metadata": {
 				"language": "sql"
 			},
